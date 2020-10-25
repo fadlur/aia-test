@@ -3,13 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node server.js",
     "build": "next build",
-    "start": "next start"
+    "start": "NODE_ENV=production node server.js"
   },
   "dependencies": {
+    "@tinymce/tinymce-react": "^3.8.1",
+    "axios": "^0.20.0",
+    "body-parser": "^1.19.0",
+    "bootstrap": "^4.5.3",
+    "cookies": "^0.8.0",
+    "cross-env": "^7.0.2",
+    "express": "^4.17.1",
+    "form-data": "^3.0.0",
+    "formidable": "^1.2.2",
     "next": "9.5.5",
-    "react": "16.14.0",
-    "react-dom": "16.14.0"
+    "next-images": "^1.6.0",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "reactstrap": "^8.6.0",
+    "sass": "^1.27.0"
   }
 }
