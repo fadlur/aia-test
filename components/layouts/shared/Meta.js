@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 
 const Meta = (props) => {
-  const { title, metaDescription, metaImage="https://bucket.sarana.digital/assets/images/images/logo.png"} = props;
+  const { title, metaDescription, metaImage="/logo.png"} = props;
   const router = useRouter();
   return (
     <Head>

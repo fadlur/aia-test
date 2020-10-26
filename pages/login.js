@@ -24,10 +24,7 @@ const Login = (props) => {
 
 			if (datauser.status === 'fulfilled') {
 				window.location.pathname="/dashboard";
-			} else {
-        setStatus('error');
-        setMsg('Cek email dan passwordmu');
-      }
+			}
 		}
 		if (is_login) {
 			loaduser();

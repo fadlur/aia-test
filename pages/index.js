@@ -6,18 +6,10 @@ import Link from "next/link";
 const Index = (props) => {
   return (
     <BaseLayout
-      title="Selamat Datang"
+      title="Beranda"
       metaDescription="E-PKWT layanan pendataan pekerja">
       <Container className="py-4">
-        <Row>
-          <Col className="py-4">
-            <Link href="/kategori">
-              <a style={{textDecoration:"none"}}>
-                <h4>Home</h4>
-              </a>
-            </Link>
-          </Col>
-        </Row>
+        
       </Container>
     </BaseLayout>
   )

@@ -44,13 +44,13 @@ const Header = (props) => {
                 <BsNavLink title='Home' href='/' />
               </NavItem>
               <NavItem>
-                <BsNavLink title='About' href='/about' />
+                <BsNavLink title='Alur' href='/alur' />
               </NavItem>
               <NavItem>
-                <BsNavLink title='Contact Us' href='/contact' />
+                <BsNavLink title='FAQ' href='/faq' />
               </NavItem>
               <NavItem>
-                <BsNavLink title='Kategori' href='/kategori' />
+                <BsNavLink title='Kontak' href='/kontak' />
               </NavItem>
               <NavItem>
                 <BsNavLink title='Login' href='/login' />

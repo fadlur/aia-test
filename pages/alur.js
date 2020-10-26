@@ -3,11 +3,11 @@ import BaseLayout from "@/components/layouts/BaseLayout";
 import CardKelas from "@/components/form/cardkelas";
 import Link from "next/link";
 
-const Contact = (props) => {
+const Alur = (props) => {
   return (
     <BaseLayout
-      title="Selamat Datang di Kelas"
-      metaDescription="Selamat Datang di Kelas, Kelas berisi bermacam-macam tutorial mulai komputer dasar sampai web development">
+      title="Alur"
+      metaDescription="Alur E-PKWT">
       <Container className="py-4">
         <Row>
           <Col className="py-4">
@@ -18,14 +18,14 @@ const Contact = (props) => {
                 </Link>
               </BreadcrumbItem>
               <BreadcrumbItem>
-                About
+                Alur
               </BreadcrumbItem>
             </Breadcrumb>
           </Col>
         </Row>
         <Row>
           <Col className="mb-2">
-            
+            Ilustrasi gambar alur pelaporan surat
           </Col>
         </Row>
       </Container>
@@ -33,4 +33,4 @@ const Contact = (props) => {
   )
 }
 
-export default Contact;
+export default Alur;
