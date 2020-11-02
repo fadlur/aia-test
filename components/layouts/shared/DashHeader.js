@@ -70,7 +70,7 @@ const DashHeader = (props) => {
               <NavItem>
                 <BsNavLink title='Dashboard' href='/dashboard' />
               </NavItem>
-              { user.role === 'admin' || user.role === 'kepala'  &&
+              { user.role === 'admin'  &&
               <>
                 <NavItem>
                   <BsNavLink title='User' href='/dashboard/user' />
@@ -80,10 +80,28 @@ const DashHeader = (props) => {
                 </NavItem>
               </>
               }
+              { user.role === 'member'  &&
+              <>
+                <NavItem>
+                  <BsNavLink title='Perusahaan' href='/dashboard/perusahaan' />
+                </NavItem>
+                <NavItem>
+                  <BsNavLink title='Surat' href='/dashboard/surat' />
+                </NavItem>
+              </>
+              }
               { user.role === ('kepala') &&
+              <>
+                <NavItem>
+                  <BsNavLink title='User' href='/dashboard/user' />
+                </NavItem>
+                <NavItem>
+                  <BsNavLink title='Surat' href='/dashboard/surat' />
+                </NavItem>
                 <NavItem>
                   <BsNavLink title='Admin' href='/dashboard/admin' />
                 </NavItem>
+              </>
               }
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>

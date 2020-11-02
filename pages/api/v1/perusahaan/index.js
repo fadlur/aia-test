@@ -1,5 +1,6 @@
 import Cookies from 'cookies';
 import axiosInstance from "@/components/lib/client";
+import Axios from 'axios';
 
 export default async (req, res) => {
   const cookies = new Cookies(req, res, {keys: [process.env.COOKIE_SECRET]});
@@ -9,7 +10,7 @@ export default async (req, res) => {
   if (is_login) {
     try {
       const header = { 'Authorization': token_type+' '+access_token};
-      const axiosRes = await axiosInstance.get(`/admin/user?role=${req.query.role}`, { headers: header });
+      const axiosRes = await axiosInstance.post('/auth/perusahaan', {}, { headers: header });
       res.status(200).json(axiosRes.data);
       console.log(axiosRes.data);
     } catch (error) {

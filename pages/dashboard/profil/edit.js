@@ -40,70 +40,70 @@ const Edit = ({itemuser}) => {
   const [ ongkir, setOngkir ] = useState({
     kecamatan_id: null,
     nama_kecamatan: null,
-    kota_id: null,
+    kota_id: 209,
     nama_kota:null,
     provinsi_id: null,
     nama_provinsi: null
   });
 
   useEffect(() => {
-    const loadprovinsi = async () => {
+    const loadkecamatan = async () => {
       try {
-        const dataRes = await Axios.get('/api/v1/ongkir/provinsi');
-        setItemPronvinsi(dataRes.data.content.itemprovinsi);
+        const dataRes = await Axios.get('/api/v1/ongkir/subdistrict');
+        setItemKecamatan(dataRes.data.content.itemsubdistrict);
       } catch (error) {
       }
     }
 
-    loadprovinsi();
+    loadkecamatan();
   }, []);
 
   const handleInputChange = (e) => {
     setValues({...values, [e.target.name]: e.target.value});
   }
-  const handleProvinsiChange = (id) => {
-    setItemKota([]);
-    setItemKecamatan([]);
-    setOngkir({...ongkir, ['provinsi_id']: id});
-    setLoadingProses(true);
-    Axios.get(`/api/v1/ongkir/city?province=${id}`)
-    .then(response => {
-      setLoadingProses(false);
-      cetakMsg(response.data.msg, 'success');
-      setTimeout(() => {
-        clearMsg();
-      }, 2000);
-      setItemKota(response.data.content.itemcity);
-    })
-    .catch(err => {
-      setLoadingProses(false);
-      setItemKota([]);
-      cetakMsg(err.message, 'error');
-      setTimeout(() => {
-        clearMsg
-      }, 2000);
-    })
-  }
+  // const handleProvinsiChange = (id) => {
+  //   setItemKota([]);
+  //   setItemKecamatan([]);
+  //   setOngkir({...ongkir, ['provinsi_id']: id});
+  //   setLoadingProses(true);
+  //   Axios.get(`/api/v1/ongkir/city?province=${id}`)
+  //   .then(response => {
+  //     setLoadingProses(false);
+  //     cetakMsg(response.data.msg, 'success');
+  //     setTimeout(() => {
+  //       clearMsg();
+  //     }, 2000);
+  //     setItemKota(response.data.content.itemcity);
+  //   })
+  //   .catch(err => {
+  //     setLoadingProses(false);
+  //     setItemKota([]);
+  //     cetakMsg(err.message, 'error');
+  //     setTimeout(() => {
+  //       clearMsg
+  //     }, 2000);
+  //   })
+  // }
 
-  const handleKotaChange = (id) => {
-    setItemKecamatan([]);
-    setOngkir({...ongkir, ['kota_id']: id});
-    setLoadingProses(true);
-    Axios.get(`/api/v1/ongkir/subdistrict?city=${id}`)
-    .then(response => {
-      setLoadingProses(false);
-      cetakMsg(response.data.msg, 'success');
-      setTimeout(() => {
-        clearMsg();
-      }, 2000);
-      setItemKecamatan(response.data.content.itemsubdistrict);
-    })
-    .catch(err => {
-      setLoadingProses(false);
-      cetakMsg(err.message, 'error');
-      setItemKecamatan([]);
-    })
-  }
+  // const handleKotaChange = (id) => {
+  //   setItemKecamatan([]);
+  //   setOngkir({...ongkir, ['kota_id']: id});
+  //   setLoadingProses(true);
+  //   Axios.get(`/api/v1/ongkir/subdistrict?city=${id}`)
+  //   .then(response => {
+  //     setLoadingProses(false);
+  //     cetakMsg(response.data.msg, 'success');
+  //     setTimeout(() => {
+  //       clearMsg();
+  //     }, 2000);
+  //     setItemKecamatan(response.data.content.itemsubdistrict);
+  //   })
+  //   .catch(err => {
+  //     setLoadingProses(false);
+  //     cetakMsg(err.message, 'error');
+  //     setItemKecamatan([]);
+  //   })
+  // }
 
   const handleDetailKecamatan = (id) => {
     setLoadingProses(true);
@@ -209,10 +209,10 @@ const Edit = ({itemuser}) => {
                       <FormGroup>
                         <Label>Provinsi</Label>
                         <Input name="provinsi" type="select" onChange={(e) => handleProvinsiChange(e.target.value)}>
-                          <option value="">Pilih Provinsi</option>
-                          {itemprovinsi.map((pro, index) => 
+                          <option value="">Jawa Tengah</option>
+                          {/* {itemprovinsi.map((pro, index) => 
                               <option key={index} value={pro.province_id}>{pro.province}</option>
-                          )}
+                          )} */}
                         </Input>
                       </FormGroup>
                     </Col>
@@ -220,7 +220,7 @@ const Edit = ({itemuser}) => {
                       <FormGroup>
                         <Label>Kota</Label>
                         <Input name="kota" type="select" onChange={(e) => handleKotaChange(e.target.value)}>
-                          <option value="">Pilih Kota</option>
+                          <option value="">Kabupaten Kudus</option>
                           { itemkota.map((kota, index) => 
                             <option key={index} value={kota.city_id}>{kota.type} {kota.city_name}</option>
                           )}

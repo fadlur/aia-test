@@ -9,7 +9,7 @@ const withAuth = (Component) => role => {
     const [ itemuser, setItemUser ] = useState(null);
     const [ is_login, setIsLogin ] = useState(null);
     useEffect(() => {
-      const url = '/api/v1/user';
+      const url = '/api/v1/user/profil';
       const loaduser = async () => {
         const [datauser] = await Promise.allSettled([
           Axios.get(url).then(r => r.data),

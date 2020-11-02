@@ -3,8 +3,34 @@ import DashLayout from "@/components/layouts/DashLayout";
 import { Container, Row, Table, Col, Card, CardBody, Button, FormGroup, Input, Form } from 'reactstrap';
 import HeaderDashboard from '@/components/layouts/shared/HeaderDashboard';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import Axios from 'axios';
 
 const Index = ({itemuser}) => {
+  // state
+  // const [ loadingproses, setLoadingProses ] = useState(false);
+  const [ listuser, setListUser ] = useState([]);
+  // const [ msg, setMsg ] = useState('');
+  // const [ status, setStatus ] = useState('');
+  // end state
+  // useEffect
+  useEffect(() => {
+    const loaduser = async () => {
+      const urluser = '/api/v1/user?role=member';
+      const [ datauser ] = await Promise.allSettled([
+        Axios.get(urluser),
+      ]);
+      
+      if (datauser.status == 'fulfilled') {
+        setListUser(datauser.value.data.content.data);
+      }
+    }
+    loaduser();
+  },[]);
+  // end useEffect
+  // function
+  let no = 1;
+  // end function
   return (
     <DashLayout 
       user={itemuser}
@@ -45,42 +71,45 @@ const Index = ({itemuser}) => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Fadlur Rohman</td>
-                      <td>fadloer@gmail.com</td>
-                      <td>085226262601</td>
-                      <td>PT. Djarum</td>
-                      <td>Approve</td>
-                      <td>
-                        <Button color="primary" size="sm" className="mr-2">Detail</Button>
-                        <Button color="info" size="sm">Edit</Button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Fadlur Rohman</td>
-                      <td>fadloer@gmail.com</td>
-                      <td>085226262601</td>
-                      <td>PT. Nojorono</td>
-                      <td>Approve</td>
-                      <td>
-                        <Button color="primary" size="sm" className="mr-2">Detail</Button>
-                        <Button color="info" size="sm">Edit</Button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Fadlur Rohman</td>
-                      <td>fadloer@gmail.com</td>
-                      <td>085226262601</td>
-                      <td>PT. Niki Super</td>
-                      <td>Approve</td>
-                      <td>
-                        <Button color="primary" size="sm" className="mr-2">Detail</Button>
-                        <Button color="info" size="sm">Edit</Button>
-                      </td>
-                    </tr>
+                    { listuser.map((user, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>
+                            {no++}
+                          </td>
+                          <td>
+                            {user.name}
+                          </td>
+                          <td>
+                            {user.email}
+                          </td>
+                          <td>
+                            {user.phone}
+                          </td>
+                          <td>
+                            {user.perusahaan != null
+                            ? user.perusahaan.nama_perusahaan
+                            : null
+                            }
+                          </td>
+                          <td>
+                            {user.perusahaan != null
+                            ? user.perusahaan.status
+                            : null
+                            }
+                          </td>
+                          <td>
+                            <Link href={`/dashboard/user/${user.id}`}>
+                              <a className="mr-2 btn btn-primary btn-sm">
+                                Detail
+                              </a>
+                            </Link>
+                            <Button color="info" size="sm">Edit</Button>
+                          </td>
+                        </tr>
+                      )
+                    })
+                    }
                   </tbody>
                 </Table>
               </CardBody>

@@ -2,7 +2,7 @@ import withAuth from '@/components/hoc/withAuth';
 import DashLayout from "@/components/layouts/DashLayout";
 import { Container, Row, Table, Col, Button, Card, CardBody, FormGroup, Label, Input, Form, Alert, CardHeader } from 'reactstrap';
 import HeaderDashboard from '@/components/layouts/shared/HeaderDashboard';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Axios from 'axios';
 import {useRouter} from 'next/router';
 import Link from 'next/link';
@@ -29,42 +29,13 @@ const Index = ({itemuser}) => {
     upah_minimum: '',
     upah_maksimum: '',
     jangka_waktu_pkwt: '',
-    alasan_pkwt: '',
+    alasan_pkwt: 'Sekali selesai, Sementara/maksimal penyelesaian 3 tahun',
     keterangan: '',
-    status: '',
     // end isi surat
   });
   // end state
   // const
   const router = useRouter();
-  useEffect(() => {
-    const loadSurat = async () => {
-      const dataSurat = await Axios.get(`/api/v1/surat/${router.query.id}`);
-      if (dataSurat.data.status == 'success') {
-        // setItemSurat(dataSurat.data.content);
-        const itemsurat = dataSurat.data.content;
-        setValues({...values, ['nama_perusahaan']: itemsurat.nama_perusahaan,
-        ['nama_pimpinan']: itemsurat.nama_pimpinan,
-        ['jabatan']: itemsurat.jabatan,
-        ['alamat']: itemsurat.alamat,
-        ['no_tlp']: itemsurat.no_tlp,
-        ['bidang_usaha']: itemsurat.bidang_usaha,
-        ['no_surat']: itemsurat.no_surat,
-        ['pekerja_pria']: itemsurat.pekerja_pria,
-        ['pekerja_wanita']: itemsurat.pekerja_wanita,
-        ['upah_minimum']: itemsurat.upah_minimum,
-        ['upah_maksimum']: itemsurat.upah_maksimum,
-        ['jangka_waktu_pkwt']: itemsurat.jangka_waktu_pkwt,
-        ['alasan_pkwt']: itemsurat.alasan_pkwt,
-        ['keterangan']: itemsurat.keterangan,
-        ['status']: itemsurat.status})
-      }
-    }
-
-    if (router && router.query) {
-      loadSurat();
-    }
-  }, [router]);
   const onHandleChange = (e) => {
     const { name, value } = e.target;
     setValues({...values, [name]: value});
@@ -73,7 +44,7 @@ const Index = ({itemuser}) => {
     e.preventDefault();
     const querystring = require('querystring');
     setLoadingProses(true);
-    Axios.post(`/api/v1/surat/${router.query.id}/update`, querystring.stringify(values))
+    Axios.post('/api/v1/surat/simpan', querystring.stringify(values))
       .then(response => {
         setLoadingProses(false);
         setMsg(response.data.msg);
@@ -87,15 +58,16 @@ const Index = ({itemuser}) => {
         setMsg(err.message);
         setStatus('error');
       })
+    // console.log(values);
   }
   // end const
   return (
     <DashLayout 
       user={itemuser}
-      title="Edit Surat" 
+      title="Buat Surat" 
       metaDescription="Dashboard Surat">
       <Container className="py-5 main-wrap">
-        <HeaderDashboard title="Edit Surat" />
+        <HeaderDashboard title="Buat Surat" />
           <Row>
             <Col>
               <Card>
@@ -174,38 +146,25 @@ const Index = ({itemuser}) => {
                           <Label>Alasan</Label>
                           <FormGroup check>
                             <Label check>
-                              { values.alasan_pkwt == "Sekali selesai, Sementara/maksimal penyelesaian 3 tahun"
-                              ? <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Sekali selesai, Sementara/maksimal penyelesaian 3 tahun" defaultChecked />
-                              : <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Sekali selesai, Sementara/maksimal penyelesaian 3 tahun" />
-                              }
+                              <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Sekali selesai, Sementara/maksimal penyelesaian 3 tahun" defaultChecked />{' '}
                               Sekali selesai, Sementara/maksimal penyelesaian 3 tahun
                             </Label>
                           </FormGroup>
                           <FormGroup check>
                             <Label check>
-                              { values.alasan_pkwt == "Musiman"
-                              ? <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Musiman" defaultChecked />
-                              : <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Musiman" />
-                              }
-                              
+                              <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Musiman" />{' '}
                               Musiman
                             </Label>
                           </FormGroup>
                           <FormGroup check>
                             <Label check>
-                              { values.alasan_pkwt == "Produk baru/kegiatan baru/produk tambahan"
-                              ? <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Produk baru/kegiatan baru/produk tambahan" defaultChecked />
-                              : <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Produk baru/kegiatan baru/produk tambahan" />
-                              }
+                              <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Produk baru/kegiatan baru/produk tambahan" />{' '}
                               Produk baru/kegiatan baru/produk tambahan
                             </Label>
                           </FormGroup>
                           <FormGroup check>
                             <Label check>
-                              { values.alasan_pkwt == "Perjanjian Kerja Harian Lepas (bekerja kurang dari 21 hari dalam 1 bulan, paling lama 3 bulan)"
-                              ? <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Perjanjian Kerja Harian Lepas (bekerja kurang dari 21 hari dalam 1 bulan, paling lama 3 bulan)" defaultChecked />
-                              : <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Perjanjian Kerja Harian Lepas (bekerja kurang dari 21 hari dalam 1 bulan, paling lama 3 bulan)" />
-                              }
+                              <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Perjanjian Kerja Harian Lepas (bekerja kurang dari 21 hari dalam 1 bulan, paling lama 3 bulan)" />{' '}
                               Perjanjian Kerja Harian Lepas (bekerja kurang dari 21 hari dalam 1 bulan, paling lama 3 bulan)
                             </Label>
                           </FormGroup>
@@ -215,7 +174,7 @@ const Index = ({itemuser}) => {
                           <Input type="textarea" name="keterangan" value={values.keterangan} onChange={onHandleChange} />
                         </FormGroup>
                         <FormGroup>
-                          <Button color="primary">Update</Button>
+                          <Button color="primary">Simpan</Button>
                         </FormGroup>
                       </Col>
                     </Row>
