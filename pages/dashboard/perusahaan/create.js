@@ -51,7 +51,7 @@ const Index = ({itemuser}) => {
     <DashLayout 
       user={itemuser}
       title="Dashboard" 
-      metaDescription="Dashboard Grosir website">
+      metaDescription="Dashboard">
       <Container className="py-5 main-wrap">
         <HeaderDashboard title="Input Data Perusahaan" />
         { itemuser.perusahaan == null

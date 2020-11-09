@@ -101,6 +101,9 @@ const DashHeader = (props) => {
                 <NavItem>
                   <BsNavLink title='Admin' href='/dashboard/admin' />
                 </NavItem>
+                <NavItem>
+                  <BsNavLink title='Laporan' href='/dashboard/laporan' />
+                </NavItem>
               </>
               }
               <UncontrolledDropdown nav inNavbar>

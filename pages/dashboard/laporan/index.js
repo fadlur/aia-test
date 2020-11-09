@@ -8,8 +8,8 @@ const Index = ({itemuser}) => {
   return (
     <DashLayout 
       user={itemuser}
-      title="Dashboard" 
-      metaDescription="Dashboard">
+      title="Laporan" 
+      metaDescription="Laporan">
       <Container className="py-5 main-wrap">
         <HeaderDashboard title="Perusahaan" />
         <Row>
@@ -17,27 +17,7 @@ const Index = ({itemuser}) => {
             <Card>
               <CardBody>
                 <Table>
-                  <thead>
-                    <tr>
-                      <th>No</th>
-                      <th>
-                        Nama Perusahaan
-                      </th>
-                      <th>
-                        No Tlp
-                      </th>
-                      <th>
-                        Pejabat
-                      </th>
-                      <th>
-                        Email Akun
-                      </th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    
-                  </tbody>
+                  
                 </Table>
               </CardBody>
             </Card>

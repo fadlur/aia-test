@@ -222,7 +222,8 @@ const Index = ({itemuser}) => {
                               </a>
                             </td>
                             <td>
-                              <Button color="primary" size="sm">Detail</Button>
+                              <Button color="primary" size="sm" className="mr-2">Detail</Button>
+                              <Button color="danger" size="sm">Delete</Button>
                             </td>
                           </tr>
                         )
@@ -260,7 +261,7 @@ const Index = ({itemuser}) => {
                       </FormGroup>
                       <FormGroup check>
                         <Label check>
-                          <Input type="radio" name="jenis" onClick={onHandleChange} value="pegawai" /> 
+                          <Input type="radio" name="jenis" onClick={onHandleChange} value="pekerja" /> 
                           Data Pegawai
                         </Label>
                       </FormGroup>
