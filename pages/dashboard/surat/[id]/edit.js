@@ -214,8 +214,19 @@ const Index = ({itemuser}) => {
                           <Label>Keterangan</Label>
                           <Input type="textarea" name="keterangan" value={values.keterangan} onChange={onHandleChange} />
                         </FormGroup>
+                        { itemuser.role == 'kepala' || itemuser.role == 'kepala'
+                        ? <FormGroup>
+                            <Label>Status</Label>
+                            <Input type="select" name="status" onChange={onHandleChange} value={values.status}>
+                              <option value="pending">Pending</option>
+                              <option value="confirm">Confirm</option>
+                            </Input>
+                          </FormGroup>
+                        : null
+                        }
+                        
                         <FormGroup>
-                          <Button color="primary">Update</Button>
+                          <Button color="primary" disabled={loadingproses}>Update</Button>
                         </FormGroup>
                       </Col>
                     </Row>

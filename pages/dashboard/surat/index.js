@@ -102,9 +102,11 @@ const Index = ({itemuser}) => {
                               <Link href={`/dashboard/surat/${surat.id}`}>
                                 <a className="btn btn-sm btn-primary mr-2">Detail</a>
                               </Link>
-                              <Link href={`/dashboard/surat/${surat.id}/edit`}>
-                                <a className="btn btn-sm btn-info">Edit</a>
-                              </Link>
+                              { surat.status == 'pending' &&
+                                <Link href={`/dashboard/surat/${surat.id}/edit`}>
+                                  <a className="btn btn-sm btn-info">Edit</a>
+                                </Link>
+                              }
                             </td>
                           </tr>
                         )

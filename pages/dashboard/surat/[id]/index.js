@@ -66,7 +66,7 @@ const Index = ({itemuser}) => {
     Axios.post('/api/v1/lampiran/simpan', formData, header)
       .then(response => {
         setLoadingProses(false);
-        console.log(response.data.content);
+        // console.log(response.data.content);
         if (response.data.status == 'success') {
           listlampiran.push(response.data.content);
           setStatus(response.data.status);
@@ -81,6 +81,24 @@ const Index = ({itemuser}) => {
         setStatus('error');
         setMsg(err.message);
         setLoadingProses(false);
+      })
+  }
+
+  const onHandleDelete = (id, index) => {
+    setLoadingProses(true);
+    Axios.delete(`/api/v1/lampiran/${id}/delete`)
+      .then(response => {
+        setLoadingProses(false);
+        if (response.data.status == 'success') {
+          listlampiran.splice(index, 1);
+        }
+        setStatus(response.data.status);
+        setMsg(response.data.msg);
+      })
+      .catch(err => {
+        setLoadingProses(false);
+        setStatus('error');
+        setMsg(err.message);
       })
   }
 
@@ -206,6 +224,7 @@ const Index = ({itemuser}) => {
                       <tr>
                         <th>Title</th>
                         <th>Jenis</th>
+                        <th>Status</th>
                         <th>File</th>
                         <th></th>
                       </tr>
@@ -217,13 +236,21 @@ const Index = ({itemuser}) => {
                             <td>{lampiran.title}</td>
                             <td>{lampiran.jenis}</td>
                             <td>
+                              { lampiran.status }
+                            </td>
+                            <td>
                               <a href={lampiran.link}>
                                 file
                               </a>
                             </td>
                             <td>
-                              <Button color="primary" size="sm" className="mr-2">Detail</Button>
-                              <Button color="danger" size="sm">Delete</Button>
+                              <Button color="primary" size="sm" disabled={loadingproses} className="mr-2 mb-2">Detail</Button>
+                              { lampiran.status == 'pending' &&
+                                <Button color="danger" size="sm" disabled={loadingproses} className="mb-2" onClick={() => onHandleDelete(lampiran.id, index)}>Delete</Button>                              
+                              }
+                              { lampiran.status == 'confirm' &&
+                                <Button color="danger" size="sm" disabled={true} className="mb-2">Delete</Button>                              
+                              }
                             </td>
                           </tr>
                         )
@@ -233,50 +260,53 @@ const Index = ({itemuser}) => {
                 </div>
               </CardBody>
             </Card>
-            <Card>
-              <CardHeader>
-                Form Lampiran
-              </CardHeader>
-              <CardBody>
-                {status == 'error' &&
-                <Alert color="warning">{msg}</Alert>
-                }
+            { itemuser.role == 'member' && (itemsurat != null? itemsurat.status == 'pending': null)
+            ? <Card>
+                <CardHeader>
+                  Form Lampiran
+                </CardHeader>
+                <CardBody>
+                  {status == 'error' &&
+                  <Alert color="warning">{msg}</Alert>
+                  }
 
-                {status == 'success' &&
-                <Alert color="success">{msg}</Alert>
-                }
-                <Form onSubmit={onHandleSubmit}>
-                  <FormGroup>
-                    <Label>Title</Label>
-                    <Input type="text" name="title" value={values.title} onChange={onHandleChange} />
-                  </FormGroup>
-                  <FormGroup>
-                    <Label>Jenis File</Label>
+                  {status == 'success' &&
+                  <Alert color="success">{msg}</Alert>
+                  }
+                  <Form onSubmit={onHandleSubmit}>
                     <FormGroup>
-                      <FormGroup check>
-                        <Label check>
-                          <Input type="radio" name="jenis" onClick={onHandleChange} value="pasal" defaultChecked /> 
-                          Pasal
-                        </Label>
-                      </FormGroup>
-                      <FormGroup check>
-                        <Label check>
-                          <Input type="radio" name="jenis" onClick={onHandleChange} value="pekerja" /> 
-                          Data Pegawai
-                        </Label>
+                      <Label>Title</Label>
+                      <Input type="text" name="title" value={values.title} onChange={onHandleChange} />
+                    </FormGroup>
+                    <FormGroup>
+                      <Label>Jenis File</Label>
+                      <FormGroup>
+                        <FormGroup check>
+                          <Label check>
+                            <Input type="radio" name="jenis" onClick={onHandleChange} value="pasal" defaultChecked /> 
+                            Pasal
+                          </Label>
+                        </FormGroup>
+                        <FormGroup check>
+                          <Label check>
+                            <Input type="radio" name="jenis" onClick={onHandleChange} value="pekerja" /> 
+                            Data Pegawai
+                          </Label>
+                        </FormGroup>
                       </FormGroup>
                     </FormGroup>
-                  </FormGroup>
-                  <FormGroup>
-                    <Label>File</Label>
-                    <Input type="file" name="file" onChange={onHandleChange} />
-                  </FormGroup>
-                  <FormGroup>
-                    <Button color="primary" disabled={loadingproses}>Upload</Button>
-                  </FormGroup>
-                </Form>
-              </CardBody>
-            </Card>
+                    <FormGroup>
+                      <Label>File</Label>
+                      <Input type="file" name="file" onChange={onHandleChange} />
+                    </FormGroup>
+                    <FormGroup>
+                      <Button color="primary" disabled={loadingproses}>Upload</Button>
+                    </FormGroup>
+                  </Form>
+                </CardBody>
+              </Card>
+             : null 
+            }
           </Col>
         </Row>
       </Container>
