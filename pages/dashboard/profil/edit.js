@@ -271,4 +271,4 @@ const Edit = ({itemuser}) => {
   )
 }
 
-export default withAuth(Edit)(['admin', 'owner', 'admin-outlet']);
+export default withAuth(Edit)(['admin', 'member', 'kepala']);

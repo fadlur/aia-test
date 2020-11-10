@@ -130,4 +130,4 @@ const Password = ({itemuser}) => {
   )
 }
 
-export default withAuth(Password)(['admin', 'owner', 'admin-outlet']);
+export default withAuth(Password)(['admin', 'member', 'kepala']);

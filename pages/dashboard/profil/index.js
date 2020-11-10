@@ -87,4 +87,4 @@ const Index = ({itemuser}) => {
   )
 }
 
-export default withAuth(Index)(['admin', 'member']);
+export default withAuth(Index)(['admin', 'member', 'kepala']);
