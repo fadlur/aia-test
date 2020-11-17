@@ -26,3 +26,37 @@ html, body {
   padding: .5rem 0rem;
   text-decoration: none;
 }
+
+.table-print {
+  border: 1px solid black;
+}
+
+.table-print thead th {
+  border: 1px solid black;
+}
+
+.table-print tbody td {
+  border: 1px solid black;
+}
+
+.table-layout td {
+  padding: 2px;
+}
+
+#p-cetak {
+  tab-size: 4;
+}
+
+@media print {
+  .table-print {
+    border: 1px solid red;
+  }
+  
+  .table-print thead th {
+    border: 1px solid red;
+  }
+  
+  .table-print tbody td {
+    border: 1px solid red;
+  }
+}

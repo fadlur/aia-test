@@ -3,7 +3,7 @@ import Footer from '@/components/layouts/shared/Footer';
 import { useRouter } from 'next/router';
 import Meta from './shared/Meta';
 
-const DashLayout = (props) => {
+const PrintLayout = (props) => {
   const router = useRouter();
   const { children, title='Kelas Fadlur', metaDescription='', metaImage, user, loading } = props;
   return (
@@ -16,4 +16,4 @@ const DashLayout = (props) => {
   )
 }
 
-export default DashLayout;
+export default PrintLayout;

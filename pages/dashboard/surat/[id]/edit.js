@@ -42,7 +42,7 @@ const Index = ({itemuser}) => {
       const dataSurat = await Axios.get(`/api/v1/surat/${router.query.id}`);
       if (dataSurat.data.status == 'success') {
         // setItemSurat(dataSurat.data.content);
-        const itemsurat = dataSurat.data.content;
+        const itemsurat = dataSurat.data.content.itemsurat;
         setValues({...values, ['nama_perusahaan']: itemsurat.nama_perusahaan,
         ['nama_pimpinan']: itemsurat.nama_pimpinan,
         ['jabatan']: itemsurat.jabatan,
@@ -105,132 +105,135 @@ const Index = ({itemuser}) => {
                   </Link>
                 </CardHeader>
                 <CardBody>
-                  <Form onSubmit={onHandleSubmit}>
-                    <Row>
-                      <Col>
-                        <FormGroup>
-                          <Label>Nama Perusahaan</Label>
-                          <Input type="text" name="nama_perusahaan" value={values.nama_perusahaan} onChange={onHandleChange} />
-                        </FormGroup>
-                        <FormGroup>
-                          <Label>Nama Pimpinan</Label>
-                          <Input type="text" name="nama_pimpinan" value={values.nama_pimpinan} onChange={onHandleChange} />
-                        </FormGroup>
-                        <FormGroup>
-                          <Label>Jabatan</Label>
-                          <Input type="text" name="jabatan" value={values.jabatan} onChange={onHandleChange} />
-                        </FormGroup>
-                        <FormGroup>
-                          <Label>No Tlp</Label>
-                          <Input type="text" name="no_tlp" value={values.no_tlp} onChange={onHandleChange} />
-                        </FormGroup>
-                        <FormGroup>
-                          <Label>Bidang Usaha</Label>
-                          <Input type="text" name="bidang_usaha" value={values.bidang_usaha} onChange={onHandleChange} />
-                        </FormGroup>
-                        <FormGroup>
-                          <Label>Alamat</Label>
-                          <Input type="textarea" name="alamat" value={values.alamat} onChange={onHandleChange} />
-                        </FormGroup>
-                      </Col>
-                      <Col>
-                        <FormGroup>
-                          <Label>No Surat</Label>
-                          <Input type="text" name="no_surat" value={values.no_surat} onChange={onHandleChange} />
-                        </FormGroup>
-                        <Row>
-                          <Col>
-                            <FormGroup>
-                              <Label>Pekerja Pria</Label>
-                              <NumberFormat name="pekerja_pria" className="form-control" value={values.pekerja_pria} thousandSeparator={true} onChange={onHandleChange} />
+                  { values.status == 'pending'
+                  ? <Form onSubmit={onHandleSubmit}>
+                      <Row>
+                        <Col>
+                          <FormGroup>
+                            <Label>Nama Perusahaan</Label>
+                            <Input type="text" name="nama_perusahaan" value={values.nama_perusahaan} onChange={onHandleChange} />
+                          </FormGroup>
+                          <FormGroup>
+                            <Label>Nama Pimpinan</Label>
+                            <Input type="text" name="nama_pimpinan" value={values.nama_pimpinan} onChange={onHandleChange} />
+                          </FormGroup>
+                          <FormGroup>
+                            <Label>Jabatan</Label>
+                            <Input type="text" name="jabatan" value={values.jabatan} onChange={onHandleChange} />
+                          </FormGroup>
+                          <FormGroup>
+                            <Label>No Tlp</Label>
+                            <Input type="text" name="no_tlp" value={values.no_tlp} onChange={onHandleChange} />
+                          </FormGroup>
+                          <FormGroup>
+                            <Label>Bidang Usaha</Label>
+                            <Input type="text" name="bidang_usaha" value={values.bidang_usaha} onChange={onHandleChange} />
+                          </FormGroup>
+                          <FormGroup>
+                            <Label>Alamat</Label>
+                            <Input type="textarea" name="alamat" value={values.alamat} onChange={onHandleChange} />
+                          </FormGroup>
+                        </Col>
+                        <Col>
+                          <FormGroup>
+                            <Label>No Surat</Label>
+                            <Input type="text" name="no_surat" value={values.no_surat} onChange={onHandleChange} />
+                          </FormGroup>
+                          <Row>
+                            <Col>
+                              <FormGroup>
+                                <Label>Pekerja Pria</Label>
+                                <NumberFormat name="pekerja_pria" className="form-control" value={values.pekerja_pria} thousandSeparator={true} onChange={onHandleChange} />
+                              </FormGroup>
+                            </Col>
+                            <Col>
+                              <FormGroup>
+                                <Label>Pekerja Wanita</Label>
+                                <NumberFormat name="pekerja_wanita" className="form-control" value={values.pekerja_wanita} thousandSeparator={true} onChange={onHandleChange} />
+                              </FormGroup>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col>
+                              <FormGroup>
+                                <Label>Upah Minimum</Label>
+                                <NumberFormat name="upah_minimum" className="form-control" value={values.upah_minimum} thousandSeparator={true} onChange={onHandleChange} />
+                              </FormGroup>                          
+                            </Col>
+                            <Col>
+                              <FormGroup>
+                                <Label>Upah Maksimum</Label>
+                                <NumberFormat name="upah_maksimum" className="form-control" value={values.upah_maksimum} thousandSeparator={true} onChange={onHandleChange} />
+                              </FormGroup>
+                            </Col>
+                          </Row>
+                          <FormGroup>
+                            <Label>Jangka Waktu PKWT</Label>
+                            <Input type="text" name="jangka_waktu_pkwt" value={values.jangka_waktu_pkwt} onChange={onHandleChange} />
+                          </FormGroup>
+                          <FormGroup>
+                            <Label>Alasan</Label>
+                            <FormGroup check>
+                              <Label check>
+                                { values.alasan_pkwt == "Sekali selesai, Sementara/maksimal penyelesaian 3 tahun"
+                                ? <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Sekali selesai, Sementara/maksimal penyelesaian 3 tahun" defaultChecked />
+                                : <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Sekali selesai, Sementara/maksimal penyelesaian 3 tahun" />
+                                }
+                                Sekali selesai, Sementara/maksimal penyelesaian 3 tahun
+                              </Label>
                             </FormGroup>
-                          </Col>
-                          <Col>
-                            <FormGroup>
-                              <Label>Pekerja Wanita</Label>
-                              <NumberFormat name="pekerja_wanita" className="form-control" value={values.pekerja_wanita} thousandSeparator={true} onChange={onHandleChange} />
+                            <FormGroup check>
+                              <Label check>
+                                { values.alasan_pkwt == "Musiman"
+                                ? <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Musiman" defaultChecked />
+                                : <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Musiman" />
+                                }
+                                
+                                Musiman
+                              </Label>
                             </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col>
-                            <FormGroup>
-                              <Label>Upah Minimum</Label>
-                              <NumberFormat name="upah_minimum" className="form-control" value={values.upah_minimum} thousandSeparator={true} onChange={onHandleChange} />
-                            </FormGroup>                          
-                          </Col>
-                          <Col>
-                            <FormGroup>
-                              <Label>Upah Maksimum</Label>
-                              <NumberFormat name="upah_maksimum" className="form-control" value={values.upah_maksimum} thousandSeparator={true} onChange={onHandleChange} />
+                            <FormGroup check>
+                              <Label check>
+                                { values.alasan_pkwt == "Produk baru/kegiatan baru/produk tambahan"
+                                ? <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Produk baru/kegiatan baru/produk tambahan" defaultChecked />
+                                : <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Produk baru/kegiatan baru/produk tambahan" />
+                                }
+                                Produk baru/kegiatan baru/produk tambahan
+                              </Label>
                             </FormGroup>
-                          </Col>
-                        </Row>
-                        <FormGroup>
-                          <Label>Jangka Waktu PKWT</Label>
-                          <Input type="text" name="jangka_waktu_pkwt" value={values.jangka_waktu_pkwt} onChange={onHandleChange} />
-                        </FormGroup>
-                        <FormGroup>
-                          <Label>Alasan</Label>
-                          <FormGroup check>
-                            <Label check>
-                              { values.alasan_pkwt == "Sekali selesai, Sementara/maksimal penyelesaian 3 tahun"
-                              ? <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Sekali selesai, Sementara/maksimal penyelesaian 3 tahun" defaultChecked />
-                              : <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Sekali selesai, Sementara/maksimal penyelesaian 3 tahun" />
-                              }
-                              Sekali selesai, Sementara/maksimal penyelesaian 3 tahun
-                            </Label>
+                            <FormGroup check>
+                              <Label check>
+                                { values.alasan_pkwt == "Perjanjian Kerja Harian Lepas (bekerja kurang dari 21 hari dalam 1 bulan, paling lama 3 bulan)"
+                                ? <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Perjanjian Kerja Harian Lepas (bekerja kurang dari 21 hari dalam 1 bulan, paling lama 3 bulan)" defaultChecked />
+                                : <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Perjanjian Kerja Harian Lepas (bekerja kurang dari 21 hari dalam 1 bulan, paling lama 3 bulan)" />
+                                }
+                                Perjanjian Kerja Harian Lepas (bekerja kurang dari 21 hari dalam 1 bulan, paling lama 3 bulan)
+                              </Label>
+                            </FormGroup>
                           </FormGroup>
-                          <FormGroup check>
-                            <Label check>
-                              { values.alasan_pkwt == "Musiman"
-                              ? <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Musiman" defaultChecked />
-                              : <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Musiman" />
-                              }
-                              
-                              Musiman
-                            </Label>
+                          <FormGroup>
+                            <Label>Keterangan</Label>
+                            <Input type="textarea" name="keterangan" value={values.keterangan} onChange={onHandleChange} />
                           </FormGroup>
-                          <FormGroup check>
-                            <Label check>
-                              { values.alasan_pkwt == "Produk baru/kegiatan baru/produk tambahan"
-                              ? <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Produk baru/kegiatan baru/produk tambahan" defaultChecked />
-                              : <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Produk baru/kegiatan baru/produk tambahan" />
-                              }
-                              Produk baru/kegiatan baru/produk tambahan
-                            </Label>
+                          { itemuser.role == 'kepala' || itemuser.role == 'admin'
+                          ? <FormGroup>
+                              <Label>Status</Label>
+                              <Input type="select" name="status" onChange={onHandleChange} value={values.status}>
+                                <option value="pending">Pending</option>
+                                <option value="confirm">Confirm</option>
+                              </Input>
+                            </FormGroup>
+                          : null
+                          }
+                          
+                          <FormGroup>
+                            <Button color="primary" disabled={loadingproses}>Update</Button>
                           </FormGroup>
-                          <FormGroup check>
-                            <Label check>
-                              { values.alasan_pkwt == "Perjanjian Kerja Harian Lepas (bekerja kurang dari 21 hari dalam 1 bulan, paling lama 3 bulan)"
-                              ? <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Perjanjian Kerja Harian Lepas (bekerja kurang dari 21 hari dalam 1 bulan, paling lama 3 bulan)" defaultChecked />
-                              : <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Perjanjian Kerja Harian Lepas (bekerja kurang dari 21 hari dalam 1 bulan, paling lama 3 bulan)" />
-                              }
-                              Perjanjian Kerja Harian Lepas (bekerja kurang dari 21 hari dalam 1 bulan, paling lama 3 bulan)
-                            </Label>
-                          </FormGroup>
-                        </FormGroup>
-                        <FormGroup>
-                          <Label>Keterangan</Label>
-                          <Input type="textarea" name="keterangan" value={values.keterangan} onChange={onHandleChange} />
-                        </FormGroup>
-                        { itemuser.role == 'kepala' || itemuser.role == 'kepala'
-                        ? <FormGroup>
-                            <Label>Status</Label>
-                            <Input type="select" name="status" onChange={onHandleChange} value={values.status}>
-                              <option value="pending">Pending</option>
-                              <option value="confirm">Confirm</option>
-                            </Input>
-                          </FormGroup>
-                        : null
-                        }
-                        
-                        <FormGroup>
-                          <Button color="primary" disabled={loadingproses}>Update</Button>
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                  </Form>
+                        </Col>
+                      </Row>
+                    </Form>
+                  : <Alert color="warning">Data Sudah Dikonfirm</Alert>
+                  }
                 </CardBody>
               </Card>
             </Col>

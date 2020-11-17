@@ -29,7 +29,7 @@ const Index = ({itemuser}) => {
         Axios.get(urllampiran).then(r => r.data),
       ]);
       if (dataSurat.status == 'fulfilled') {
-        setItemSurat(dataSurat.value.content);
+        setItemSurat(dataSurat.value.content.itemsurat);
       }
 
       if (dataLampiran.status == 'fulfilled') {
@@ -71,7 +71,14 @@ const Index = ({itemuser}) => {
           listlampiran.push(response.data.content);
           setStatus(response.data.status);
           setMsg(response.data.msg);
-          // resetForm();
+          // reset form
+          document.getElementById('formlampiran').reset();
+          formData.delete('title');
+          formData.delete('jenis');
+          formData.delete('file');
+          formData.delete('surat_id');
+          setValues({...values, ['jenis']: 'pasal', ['title']: ''});
+          // end reset form
         } else {
           setStatus(response.data.status);
           setMsg(response.data.msg);
@@ -243,15 +250,26 @@ const Index = ({itemuser}) => {
                                 file
                               </a>
                             </td>
-                            <td>
-                              <Button color="primary" size="sm" disabled={loadingproses} className="mr-2 mb-2">Detail</Button>
-                              { lampiran.status == 'pending' &&
-                                <Button color="danger" size="sm" disabled={loadingproses} className="mb-2" onClick={() => onHandleDelete(lampiran.id, index)}>Delete</Button>                              
-                              }
-                              { lampiran.status == 'confirm' &&
-                                <Button color="danger" size="sm" disabled={true} className="mb-2">Delete</Button>                              
-                              }
-                            </td>
+                            { lampiran.surat_status == 'pending'
+                            ? <td>
+                                <Link href={`/dashboard/lampiran/${lampiran.id}`}>
+                                  <a className="btn btn-primary btn-sm mb-2 mr-2">Detail</a>
+                                </Link>
+                                {/* <Button color="primary" size="sm" disabled={loadingproses} className="mr-2 mb-2">Detail</Button> */}
+                                { lampiran.status == 'pending' &&
+                                  <Button color="danger" size="sm" disabled={loadingproses} className="mb-2" onClick={() => onHandleDelete(lampiran.id, index)}>Delete</Button>                              
+                                }
+                                {/* { lampiran.status == 'confirm' &&
+                                  <Button color="danger" size="sm" disabled={true} className="mb-2">Delete</Button>                              
+                                } */}
+                              </td>
+                            : <td>
+                                <Link href={`/dashboard/lampiran/${lampiran.id}`}>
+                                  <a className="btn btn-primary btn-sm mb-2 mr-2">Detail</a>
+                                </Link>
+                              </td>
+                            }
+                            
                           </tr>
                         )
                       })}
@@ -273,7 +291,7 @@ const Index = ({itemuser}) => {
                   {status == 'success' &&
                   <Alert color="success">{msg}</Alert>
                   }
-                  <Form onSubmit={onHandleSubmit}>
+                  <Form onSubmit={onHandleSubmit} id="formlampiran">
                     <FormGroup>
                       <Label>Title</Label>
                       <Input type="text" name="title" value={values.title} onChange={onHandleChange} />
@@ -290,7 +308,7 @@ const Index = ({itemuser}) => {
                         <FormGroup check>
                           <Label check>
                             <Input type="radio" name="jenis" onClick={onHandleChange} value="pekerja" /> 
-                            Data Pegawai
+                            Data Pekerja
                           </Label>
                         </FormGroup>
                       </FormGroup>

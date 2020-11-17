@@ -100,11 +100,22 @@ const Index = ({itemuser}) => {
                             </td>
                             <td>
                               <Link href={`/dashboard/surat/${surat.id}`}>
-                                <a className="btn btn-sm btn-primary mr-2">Detail</a>
+                                <a className="btn btn-sm btn-primary mr-2 mb-2">Detail</a>
                               </Link>
+                              { surat.status == 'confirm' && (itemuser.role == 'kepala' || itemuser.role == 'admin')
+                              ? <>
+                                  <Link href={`/dashboard/surat/${surat.id}/cetak`}>
+                                    <a className="btn btn-sm btn-info mr-2 mb-2">Cetak</a>
+                                  </Link>
+                                  <Link href={`/dashboard/surat/${surat.id}/pekerja`}>
+                                    <a className="btn btn-sm btn-info mr-2 mb-2">Pekerja</a>
+                                  </Link>
+                                </>
+                              : null                              
+                              }
                               { surat.status == 'pending' &&
                                 <Link href={`/dashboard/surat/${surat.id}/edit`}>
-                                  <a className="btn btn-sm btn-info">Edit</a>
+                                  <a className="btn btn-sm btn-info mb-2">Edit</a>
                                 </Link>
                               }
                             </td>

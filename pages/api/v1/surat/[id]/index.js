@@ -9,7 +9,7 @@ export default async (req, res) => {
   if (is_login) {
     try {
       const header = { 'Authorization': token_type+' '+access_token};
-      const axiosRes = await axiosInstance.get(`/admin/surat/${req.query.id}`, { headers: header });
+      const axiosRes = await axiosInstance.get(`/admin/surat/${req.query.id}?param=${req.query.param}`, { headers: header });
       res.status(200).json(axiosRes.data);
     } catch (error) {
       res.status(error.status || 400).json({message: 'Api error!'});
