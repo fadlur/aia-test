@@ -100,12 +100,16 @@ const Index = ({itemuser}) => {
                               }
                             </td>
                             <td>
-                              {/* <Link href={`/dashboard/user/${user.id}`}>
+                              <Link href={`/dashboard/user/${user.id}`}>
                                 <a className="mr-2 mb-2 btn btn-primary btn-sm">
                                   Detail
                                 </a>
                               </Link>
-                              <Button color="info" size="sm" className="mb-2">Edit</Button> */}
+                              <Link href={`/dashboard/user/${user.id}/edit`}>
+                                <a className="mr-2 mb-2 btn btn-info btn-sm">
+                                  Edit
+                                </a>
+                              </Link>
                             </td>
                           </tr>
                         )

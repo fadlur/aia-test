@@ -98,9 +98,9 @@ const DashHeader = (props) => {
                 <NavItem>
                   <BsNavLink title='Surat' href='/dashboard/surat' />
                 </NavItem>
-                <NavItem>
+                {/* <NavItem>
                   <BsNavLink title='Admin' href='/dashboard/admin' />
-                </NavItem>
+                </NavItem> */}
                 <NavItem>
                   <BsNavLink title='Laporan' href='/dashboard/laporan' />
                 </NavItem>

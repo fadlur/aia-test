@@ -45,7 +45,7 @@ const Index = ({itemuser}) => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    {/* <tr>
                       <td>1</td>
                       <td>Fadlur Rohman</td>
                       <td>fadloer@gmail.com</td>
@@ -53,9 +53,17 @@ const Index = ({itemuser}) => {
                       <td>admin</td>
                       <td>aktif</td>
                       <td>
-                        {/* <Button color="primary" size="sm" className="mr-2">Detail</Button>
-                        <Button color="info" size="sm">Edit</Button> */}
-                      </td>
+                        <Link href={`/dashboard/admin/${admin.id}`}>
+                          <a className="mr-2 mb-2 btn btn-primary btn-sm">
+                            Detail
+                          </a>
+                        </Link>
+                        <Link href={`/dashboard/admin/${admin.id}/edit`}>
+                          <a className="mr-2 mb-2 btn btn-info btn-sm">
+                            Edit
+                          </a>
+                        </Link>
+                      </td> */}
                     </tr>
                   </tbody>
                 </Table>
