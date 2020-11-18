@@ -63,8 +63,8 @@ const Index = ({itemuser}) => {
                             Edit
                           </a>
                         </Link>
-                      </td> */}
-                    </tr>
+                      </td>
+                    </tr> */}
                   </tbody>
                 </Table>
               </CardBody>
