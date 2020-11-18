@@ -53,8 +53,8 @@ const Index = ({itemuser}) => {
                       <td>admin</td>
                       <td>aktif</td>
                       <td>
-                        <Button color="primary" size="sm" className="mr-2">Detail</Button>
-                        <Button color="info" size="sm">Edit</Button>
+                        {/* <Button color="primary" size="sm" className="mr-2">Detail</Button>
+                        <Button color="info" size="sm">Edit</Button> */}
                       </td>
                     </tr>
                   </tbody>

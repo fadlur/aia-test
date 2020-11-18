@@ -58,60 +58,62 @@ const Index = ({itemuser}) => {
                 </Form>
               </CardBody>
               <CardBody>
-                <Table>
-                  <thead>
-                    <tr>
-                      <th>No</th>
-                      <th>Nama</th>
-                      <th>Email</th>
-                      <th>Phone</th>
-                      <th>Perusahaan</th>
-                      <th>Status</th>
-                      <th width="200px"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    { listuser.map((user, index) => {
-                      return (
-                        <tr key={index}>
-                          <td>
-                            {no++}
-                          </td>
-                          <td>
-                            {user.name}
-                          </td>
-                          <td>
-                            {user.email}
-                          </td>
-                          <td>
-                            {user.phone}
-                          </td>
-                          <td>
-                            {user.perusahaan != null
-                            ? user.perusahaan.nama_perusahaan
-                            : null
-                            }
-                          </td>
-                          <td>
-                            {user.perusahaan != null
-                            ? user.perusahaan.status
-                            : null
-                            }
-                          </td>
-                          <td>
-                            <Link href={`/dashboard/user/${user.id}`}>
-                              <a className="mr-2 btn btn-primary btn-sm">
-                                Detail
-                              </a>
-                            </Link>
-                            <Button color="info" size="sm">Edit</Button>
-                          </td>
-                        </tr>
-                      )
-                    })
-                    }
-                  </tbody>
-                </Table>
+                <div className="table-responsive">
+                  <Table>
+                    <thead>
+                      <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Perusahaan</th>
+                        <th>Status</th>
+                        <th width="200px"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      { listuser.map((user, index) => {
+                        return (
+                          <tr key={index}>
+                            <td>
+                              {no++}
+                            </td>
+                            <td>
+                              {user.name}
+                            </td>
+                            <td>
+                              {user.email}
+                            </td>
+                            <td>
+                              {user.phone}
+                            </td>
+                            <td>
+                              {user.perusahaan != null
+                              ? user.perusahaan.nama_perusahaan
+                              : null
+                              }
+                            </td>
+                            <td>
+                              {user.perusahaan != null
+                              ? user.perusahaan.status
+                              : null
+                              }
+                            </td>
+                            <td>
+                              {/* <Link href={`/dashboard/user/${user.id}`}>
+                                <a className="mr-2 mb-2 btn btn-primary btn-sm">
+                                  Detail
+                                </a>
+                              </Link>
+                              <Button color="info" size="sm" className="mb-2">Edit</Button> */}
+                            </td>
+                          </tr>
+                        )
+                      })
+                      }
+                    </tbody>
+                  </Table>
+                </div>
               </CardBody>
             </Card>
           </Col>
