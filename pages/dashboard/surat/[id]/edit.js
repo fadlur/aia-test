@@ -13,6 +13,7 @@ const Index = ({itemuser}) => {
   const [ loadingproses, setLoadingProses ] = useState(false);
   const [ msg, setMsg ] = useState('');
   const [ status, setStatus ] = useState('');
+  const [ itemsurat, setItemSurat ] = useState(null);
   const [ values, setValues ] = useState({
     // data perusahaan
     nama_perusahaan: itemuser.perusahaan != null? itemuser.perusahaan.nama_perusahaan: '',
@@ -42,22 +43,23 @@ const Index = ({itemuser}) => {
       const dataSurat = await Axios.get(`/api/v1/surat/${router.query.id}`);
       if (dataSurat.data.status == 'success') {
         // setItemSurat(dataSurat.data.content);
-        const itemsurat = dataSurat.data.content.itemsurat;
-        setValues({...values, ['nama_perusahaan']: itemsurat.nama_perusahaan,
-        ['nama_pimpinan']: itemsurat.nama_pimpinan,
-        ['jabatan']: itemsurat.jabatan,
-        ['alamat']: itemsurat.alamat,
-        ['no_tlp']: itemsurat.no_tlp,
-        ['bidang_usaha']: itemsurat.bidang_usaha,
-        ['no_surat']: itemsurat.no_surat,
-        ['pekerja_pria']: itemsurat.pekerja_pria,
-        ['pekerja_wanita']: itemsurat.pekerja_wanita,
-        ['upah_minimum']: itemsurat.upah_minimum,
-        ['upah_maksimum']: itemsurat.upah_maksimum,
-        ['jangka_waktu_pkwt']: itemsurat.jangka_waktu_pkwt,
-        ['alasan_pkwt']: itemsurat.alasan_pkwt,
-        ['keterangan']: itemsurat.keterangan,
-        ['status']: itemsurat.status})
+        const surat = dataSurat.data.content.itemsurat;
+        setItemSurat(dataSurat.data.content.itemsurat);
+        setValues({...values, ['nama_perusahaan']: surat.nama_perusahaan,
+        ['nama_pimpinan']: surat.nama_pimpinan,
+        ['jabatan']: surat.jabatan,
+        ['alamat']: surat.alamat,
+        ['no_tlp']: surat.no_tlp,
+        ['bidang_usaha']: surat.bidang_usaha,
+        ['no_surat']: surat.no_surat,
+        ['pekerja_pria']: surat.pekerja_pria,
+        ['pekerja_wanita']: surat.pekerja_wanita,
+        ['upah_minimum']: surat.upah_minimum,
+        ['upah_maksimum']: surat.upah_maksimum,
+        ['jangka_waktu_pkwt']: surat.jangka_waktu_pkwt,
+        ['alasan_pkwt']: surat.alasan_pkwt,
+        ['keterangan']: surat.keterangan,
+        ['status']: surat.status})
       }
     }
 
@@ -105,7 +107,7 @@ const Index = ({itemuser}) => {
                   </Link>
                 </CardHeader>
                 <CardBody>
-                  { values.status == 'pending'
+                  { itemsurat != null && itemsurat.status == 'pending'
                   ? <Form onSubmit={onHandleSubmit}>
                       <Row>
                         <Col>
