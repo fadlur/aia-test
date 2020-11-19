@@ -78,6 +78,15 @@ const DashHeader = (props) => {
                 <NavItem>
                   <BsNavLink title='Surat' href='/dashboard/surat' />
                 </NavItem>
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    Setting
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                    <DropDownLink href="/dashboard/setting" title="Tanda Tangan"/>
+                    <DropDownLink href="/dashboard/slideshow" title="Slideshow"/>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
               </>
               }
               { user.role === 'member'  &&
@@ -101,6 +110,15 @@ const DashHeader = (props) => {
                 {/* <NavItem>
                   <BsNavLink title='Admin' href='/dashboard/admin' />
                 </NavItem> */}
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    Setting
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                    <DropDownLink href="/dashboard/setting" title="Tanda Tangan"/>
+                    <DropDownLink href="/dashboard/slideshow" title="Slideshow"/>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
                 <NavItem>
                   <BsNavLink title='Laporan' href='/dashboard/laporan' />
                 </NavItem>

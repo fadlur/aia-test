@@ -17,7 +17,6 @@ const Cetak = ({itemuser}) => {
       const [ dataSurat ] = await Promise.allSettled([
         Axios.get(urlsurat).then(r => r.data),
       ]);
-      console.log(dataSurat);
       if (dataSurat.status == 'fulfilled') {
         setItemSurat(dataSurat.value.content.itemsurat);
         setListPekerja(dataSurat.value.content.itempekerja);
@@ -33,6 +32,51 @@ const Cetak = ({itemuser}) => {
     }
   }, [router]);
   let no = 1;
+  const formatbulan = (bulan) => {
+    // console.log(bulan);
+    switch (bulan) {
+      case '1':
+        return 'I';
+        break;
+      case '2':
+        return 'II';
+        break;
+      case '3':
+        return 'III';
+        break;
+      case '4':
+        return 'IV';
+        break;
+      case '5':
+        return 'V';
+        break;
+      case '6':
+        return 'VI';
+        break;
+      case '7':
+        return 'VII';
+        break;
+      case '8':
+        return 'VIII';
+        break;
+      case '9':
+        return 'IX';
+        break;
+      case '10':
+        return 'X';
+        break;
+      case '11':
+        return 'XI';
+        break;
+      case '12':
+        return 'XII';
+        break;
+    
+      default:
+        return 'apawoy';
+        break;
+    }
+  }
   return (
     <PrintLayout
     title="Cetak Lampiran Pekerja" 
@@ -41,18 +85,20 @@ const Cetak = ({itemuser}) => {
         <Row className="mb-4">
           <Col>
             <Table borderless style={{borderBottom:"3px solid black"}}>
-              <tr>
-                <td width="100px" className="text-center">
-                  <img src="/logokudus.png" width="100%" />
-                </td>
-                <td className="text-center">
-                  PEMERINTAH KABUPATEN KUDUS<br />
-                  DINAS TENAGA KERJA PERINDUSTRIAN<br />
-                  KOPERASI USAHA KECIL DAN MENENGAH<br />
-                  Jln. Conge Ngembalrejo No.99 Kudus 59322<br />
-                  Telepon (0291) 438691, 431470 Fax. (0291) 438691
-                </td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td width="100px" className="text-center">
+                    <img src="/logokudus.png" width="100%" />
+                  </td>
+                  <td className="text-center">
+                    PEMERINTAH KABUPATEN KUDUS<br />
+                    DINAS TENAGA KERJA PERINDUSTRIAN<br />
+                    KOPERASI USAHA KECIL DAN MENENGAH<br />
+                    Jln. Conge Ngembalrejo No.99 Kudus 59322<br />
+                    Telepon (0291) 438691, 431470 Fax. (0291) 438691
+                  </td>
+                </tr>
+              </tbody>
             </Table>
           </Col>
         </Row>
@@ -60,7 +106,12 @@ const Cetak = ({itemuser}) => {
           <Col>
             <p className="text-center">TANDA BUKTI PENCATATAN</p>
             <p className="text-center">PERJANJIAN KERJA WAKTU TERTENTU (PKWT)</p>
-            <p className="text-center">Nomor : 560 /......./ 16.03/XI/2020</p>
+            <p className="text-center">
+              { itemsurat != null && itemsurat.pencatatan != null
+              ? `Nomor : 560 /............../ 16.03/${formatbulan(itemsurat.pencatatan.bulan)}/${itemsurat.pencatatan.tahun}` 
+              : null
+              }
+            </p>
             <p id="p-cetak">
                   Berdasarkan Pasal 59 ayat (1) Undang-undang Nomor 13 Tahun 2003 tentang Ketenagakerjaan Juncto
               Pasal 13 Keputusan Menteri Tenaga Kerja dan Transmigrasi RI Nomor : KEP.100/MEN/VI/2004 tentang Ketentuan
@@ -143,7 +194,7 @@ const Cetak = ({itemuser}) => {
                     <td>Nama Pekerja</td>
                     <td>:</td>
                     <td>
-                      { listpekerja != null ? listpekerja.nama : null} dkk
+                      { listpekerja != null ? listpekerja.nama+' dkk' : null}
                     </td>
                   </tr>
                 </tbody>
@@ -164,7 +215,10 @@ const Cetak = ({itemuser}) => {
                   </td>
                   <td>:</td>
                   <td>
-                    203/PKWT/XI/2020
+                    { itemsurat != null && itemsurat.pencatatan != null
+                    ? `${itemsurat.pencatatan.no_pencatatan}/PKWT/${formatbulan(itemsurat.pencatatan.bulan)}/${itemsurat.pencatatan.tahun}` 
+                    : null
+                    }                    
                   </td>
                 </tr>
                 <tr>
@@ -174,7 +228,10 @@ const Cetak = ({itemuser}) => {
                   </td>
                   <td>:</td>
                   <td>
-                    12 November 2020
+                    {itemsurat != null && itemsurat.pencatatan != null
+                    ? itemsurat.pencatatan.tanggal_pencatatan
+                    : null
+                    }
                   </td>
                 </tr>
               </tbody>
@@ -203,7 +260,10 @@ const Cetak = ({itemuser}) => {
                   </td>
                   <td>:</td>
                   <td>
-                    November 2020
+                    {itemsurat != null && itemsurat.pencatatan != null
+                    ? itemsurat.pencatatan.tanggal_pencatatan
+                    : null
+                    }
                   </td>
                 </tr>
               </tbody>

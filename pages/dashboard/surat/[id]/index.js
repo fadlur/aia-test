@@ -8,9 +8,12 @@ import { useRouter } from 'next/router';
 import Axios from 'axios';
 import NumberFormat from 'react-number-format';
 import FormData from 'form-data';
+var DatePicker = require("reactstrap-date-picker");
 
 const Index = ({itemuser}) => {
+  const querystring = require('querystring');
   const [ itemsurat, setItemSurat ] = useState(null);
+  const [ itempencatatan, setItemPencatatan ] = useState(null);
   const [ status, setStatus ] = useState('');
   const [ msg, setMsg ] = useState('');
   const [ listlampiran, setListLampiran ] = useState([]);
@@ -18,6 +21,9 @@ const Index = ({itemuser}) => {
   const [ values, setValues ] = useState({
     jenis: 'pasal',
     title: '',
+    no_pencatatan: '',
+    tanggal_pencatatan: '',
+    status: 'proses'
   });
   const router = useRouter();
   useEffect(() => {
@@ -30,6 +36,12 @@ const Index = ({itemuser}) => {
       ]);
       if (dataSurat.status == 'fulfilled') {
         setItemSurat(dataSurat.value.content.itemsurat);
+        setItemPencatatan(dataSurat.value.content.itemsurat.pencatatan);
+        // set form pencatatan
+        if (dataSurat.value.content.itemsurat.pencatatan != null) {
+          setValues({...values,['no_pencatatan']: dataSurat.value.content.itemsurat.pencatatan.no_pencatatan,
+                              ['status']: dataSurat.value.content.itemsurat.pencatatan.status})
+        }
       }
 
       if (dataLampiran.status == 'fulfilled') {
@@ -49,6 +61,61 @@ const Index = ({itemuser}) => {
     } else {
       setValues({...values, [name]: value});
     }
+  }
+
+  const onHandleDateChange = (v,f) => {
+    // console.log(v,f);
+    setValues({...values, ['tanggal_pencatatan']: new Date(v).toISOString()});
+  }
+
+  const onHandleSubmitPencatatan = (e) => {
+    e.preventDefault();
+    if (itemsurat != null && itemsurat.pencatatan != null) {
+      setLoadingProses(true);
+      const data = {
+        'tanggal_pencatatan': values.tanggal_pencatatan,
+        'no_pencatatan': values.no_pencatatan,
+        'surat_id': itemsurat.id,
+        'status': values.status
+      };
+  
+      Axios.patch(`/api/v1/pencatatan/${itemsurat.pencatatan.id}/update`, querystring.stringify(data))
+        .then(response => {
+          setLoadingProses(false);
+          setMsg(response.data.msg);
+          setStatus(response.data.status);
+          if (response.data.status == 'success') {
+            setItemPencatatan(response.data.content);
+          }
+        })
+        .catch(err => {
+          setLoadingProses(false);
+          setMsg(err.message);
+          setStatus('error');
+        })
+    } else {
+      const data = {
+        'tanggal_pencatatan': values.tanggal_pencatatan,
+        'no_pencatatan': values.no_pencatatan,
+        'surat_id': itemsurat.id,
+      };
+  
+      Axios.post('/api/v1/pencatatan/simpan', querystring.stringify(data))
+        .then(response => {
+          setLoadingProses(false);
+          setMsg(response.data.msg);
+          setStatus(response.data.status);
+          if (response.data.status == 'success') {
+            setItemPencatatan(response.data.content);
+          }
+        })
+        .catch(err => {
+          setLoadingProses(false);
+          setMsg(err.message);
+          setStatus('error');
+        })
+    }
+
   }
 
   const onHandleSubmit = (e) => {
@@ -116,7 +183,7 @@ const Index = ({itemuser}) => {
       metaDescription="Dashboard Detail Surat">
       <Container className="py-5 main-wrap">
         <HeaderDashboard title="Detail Surat" />
-        <Row>
+        <Row className="mb-2">
           <Col>
             <Card>
               <CardHeader>
@@ -327,6 +394,77 @@ const Index = ({itemuser}) => {
             }
           </Col>
         </Row>
+        { itemuser.role == 'kepala' || itemuser.role == 'admin'
+          ? <Row>
+              <Col md="6" sm="6">
+                <Card>
+                  <CardHeader>Nomor Registrasi Bukti Pencatatan</CardHeader>
+                  <CardBody>
+                    <Table>
+                      <thead>
+                        <tr>
+                          <th>No Registrasi</th>
+                          <th>Tanggal Pencatatan</th>
+                          <th>Status</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      {itempencatatan != null
+                      ? <tbody>
+                          <tr>
+                            <td>
+                              { itempencatatan.no_pencatatan}
+                            </td>
+                            <td>
+                              { itempencatatan.tanggal_pencatatan}
+                            </td>
+                            <td>
+                              { itempencatatan.status}
+                            </td>
+                          </tr>
+                        </tbody>
+                      : null
+                      }
+                    </Table>
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col md="6" sm="6">
+                <Card>
+                  <CardHeader>Form Pencatatan</CardHeader>
+                  <CardBody>
+                    <Form onSubmit={onHandleSubmitPencatatan}>
+                      <FormGroup>
+                        <Label>Tanggal Pencatatan</Label>
+                        <DatePicker onChange={(v, f) => onHandleDateChange(v, f)} value={values.tanggal_pencatatan} dateFormat="DD-MM-YYYY" name="tanggal_pencatatan" />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>No Registrasi</Label>
+                        <Input name="no_pencatatan" type="text" onChange={onHandleChange} value={values.no_pencatatan} />
+                      </FormGroup>
+                      { itempencatatan != null
+                      ? <FormGroup>
+                          <Label>Status</Label>
+                          <Input type="select" name="status" defaultValue={values.status} onChange={onHandleChange}>
+                            <option value="cetak">Cetak</option>
+                            <option value="proses">Proses</option>
+                          </Input>
+                        </FormGroup>
+                      : null
+                      }
+                      <FormGroup>
+                      { itempencatatan != null
+                      ? <Button color="primary" disabled={loadingproses}>Update</Button>
+                      : <Button color="primary" disabled={loadingproses}>Simpan</Button>
+                      }
+                      </FormGroup>
+                    </Form>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+          : null
+        }
       </Container>
     </DashLayout>
   )

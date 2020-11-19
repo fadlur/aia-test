@@ -102,7 +102,7 @@ const Index = ({itemuser}) => {
                               <Link href={`/dashboard/surat/${surat.id}`}>
                                 <a className="btn btn-sm btn-primary mr-2 mb-2">Detail</a>
                               </Link>
-                              { surat.status == 'confirm' && (itemuser.role == 'kepala' || itemuser.role == 'admin')
+                              { surat.pencatatan != null && (itemuser.role == 'kepala' || itemuser.role == 'admin')
                               ? <>
                                   <Link href={`/dashboard/surat/${surat.id}/cetak`}>
                                     <a className="btn btn-sm btn-info mr-2 mb-2">Cetak</a>
