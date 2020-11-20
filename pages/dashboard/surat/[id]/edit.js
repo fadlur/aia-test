@@ -25,6 +25,7 @@ const Index = ({itemuser}) => {
     // end data perusahaan
     // isi surat
     no_surat: '',
+    perihal: '',
     pekerja_pria: '',
     pekerja_wanita: '',
     upah_minimum: '',
@@ -52,6 +53,7 @@ const Index = ({itemuser}) => {
         ['no_tlp']: surat.no_tlp,
         ['bidang_usaha']: surat.bidang_usaha,
         ['no_surat']: surat.no_surat,
+        ['perihal']: surat.perihal != null ? surat.perihal: '',
         ['pekerja_pria']: surat.pekerja_pria,
         ['pekerja_wanita']: surat.pekerja_wanita,
         ['upah_minimum']: surat.upah_minimum,
@@ -141,6 +143,10 @@ const Index = ({itemuser}) => {
                             <Label>No Surat</Label>
                             <Input type="text" name="no_surat" value={values.no_surat} onChange={onHandleChange} />
                           </FormGroup>
+                          <FormGroup>
+                            <Label>Perihal</Label>
+                            <Input type="text" name="perihal" value={values.perihal} onChange={onHandleChange} />
+                          </FormGroup>
                           <Row>
                             <Col>
                               <FormGroup>
@@ -177,39 +183,48 @@ const Index = ({itemuser}) => {
                             <Label>Alasan</Label>
                             <FormGroup check>
                               <Label check>
-                                { values.alasan_pkwt == "Sekali selesai, Sementara/maksimal penyelesaian 3 tahun"
-                                ? <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Sekali selesai, Sementara/maksimal penyelesaian 3 tahun" defaultChecked />
-                                : <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Sekali selesai, Sementara/maksimal penyelesaian 3 tahun" />
+                                { values.alasan_pkwt == "Pekerjaan yang sekali selesai atau yang sementara sifatnya"
+                                ? <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Pekerjaan yang sekali selesai atau yang sementara sifatnya" defaultChecked />
+                                : <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Pekerjaan yang sekali selesai atau yang sementara sifatnya" />
                                 }
-                                Sekali selesai, Sementara/maksimal penyelesaian 3 tahun
+                                Pekerjaan yang sekali selesai atau yang sementara sifatnya
                               </Label>
                             </FormGroup>
                             <FormGroup check>
                               <Label check>
-                                { values.alasan_pkwt == "Musiman"
-                                ? <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Musiman" defaultChecked />
-                                : <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Musiman" />
+                                { values.alasan_pkwt == "Pekerjaan yang diperkirakan penyelesaiannya dalam waktu yang tidak terlalu lama"
+                                ? <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Pekerjaan yang diperkirakan penyelesaiannya dalam waktu yang tidak terlalu lama" defaultChecked />
+                                : <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Pekerjaan yang diperkirakan penyelesaiannya dalam waktu yang tidak terlalu lama" />
                                 }
                                 
-                                Musiman
+                                Pekerjaan yang diperkirakan penyelesaiannya dalam waktu yang tidak terlalu lama
                               </Label>
                             </FormGroup>
                             <FormGroup check>
                               <Label check>
-                                { values.alasan_pkwt == "Produk baru/kegiatan baru/produk tambahan"
-                                ? <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Produk baru/kegiatan baru/produk tambahan" defaultChecked />
-                                : <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Produk baru/kegiatan baru/produk tambahan" />
+                                { values.alasan_pkwt == "Pekerjaan yang bersifat musiman"
+                                ? <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Pekerjaan yang bersifat musiman" defaultChecked />
+                                : <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Pekerjaan yang bersifat musiman" />
                                 }
-                                Produk baru/kegiatan baru/produk tambahan
+                                Pekerjaan yang bersifat musiman
                               </Label>
                             </FormGroup>
                             <FormGroup check>
                               <Label check>
-                                { values.alasan_pkwt == "Perjanjian Kerja Harian Lepas (bekerja kurang dari 21 hari dalam 1 bulan, paling lama 3 bulan)"
-                                ? <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Perjanjian Kerja Harian Lepas (bekerja kurang dari 21 hari dalam 1 bulan, paling lama 3 bulan)" defaultChecked />
-                                : <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Perjanjian Kerja Harian Lepas (bekerja kurang dari 21 hari dalam 1 bulan, paling lama 3 bulan)" />
+                                { values.alasan_pkwt == "Pekerjaan yang berhubungan dengan produk baru, kegiatan baru, atau produk tambahan yang masih dalam percobaan atau penjajakan"
+                                ? <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Pekerjaan yang berhubungan dengan produk baru, kegiatan baru, atau produk tambahan yang masih dalam percobaan atau penjajakan" defaultChecked />
+                                : <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Pekerjaan yang berhubungan dengan produk baru, kegiatan baru, atau produk tambahan yang masih dalam percobaan atau penjajakan" />
                                 }
-                                Perjanjian Kerja Harian Lepas (bekerja kurang dari 21 hari dalam 1 bulan, paling lama 3 bulan)
+                                Pekerjaan yang berhubungan dengan produk baru, kegiatan baru, atau produk tambahan yang masih dalam percobaan atau penjajakan
+                              </Label>
+                            </FormGroup>
+                            <FormGroup check>
+                              <Label check>
+                                { values.alasan_pkwt == "Pekerjaan yang jenis dan sifat atau kegiatannya bersifat tidak tetap"
+                                ? <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Pekerjaan yang jenis dan sifat atau kegiatannya bersifat tidak tetap" defaultChecked />
+                                : <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Pekerjaan yang jenis dan sifat atau kegiatannya bersifat tidak tetap" />
+                                }
+                                Pekerjaan yang jenis dan sifat atau kegiatannya bersifat tidak tetap
                               </Label>
                             </FormGroup>
                           </FormGroup>

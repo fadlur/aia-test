@@ -19,6 +19,7 @@ export default async (req, res) => {
         // end data perusahaan
         // isi surat
         no_surat: req.body.no_surat,
+        perihal: req.body.perihal,
         pekerja_pria: req.body.pekerja_pria,
         pekerja_wanita: req.body.pekerja_wanita,
         upah_minimum: req.body.upah_minimum,

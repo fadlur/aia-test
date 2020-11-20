@@ -85,15 +85,16 @@ const DashHeader = (props) => {
                   <DropdownMenu right>
                     <DropDownLink href="/dashboard/setting" title="Tanda Tangan"/>
                     <DropDownLink href="/dashboard/slideshow" title="Slideshow"/>
+                    <DropDownLink href="/dashboard/page" title="Page"/>
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </>
               }
               { user.role === 'member'  &&
               <>
-                <NavItem>
+                {/* <NavItem>
                   <BsNavLink title='Perusahaan' href='/dashboard/perusahaan' />
-                </NavItem>
+                </NavItem> */}
                 <NavItem>
                   <BsNavLink title='Surat' href='/dashboard/surat' />
                 </NavItem>
@@ -117,6 +118,7 @@ const DashHeader = (props) => {
                   <DropdownMenu right>
                     <DropDownLink href="/dashboard/setting" title="Tanda Tangan"/>
                     <DropDownLink href="/dashboard/slideshow" title="Slideshow"/>
+                    <DropDownLink href="/dashboard/page" title="Page"/>
                   </DropdownMenu>
                 </UncontrolledDropdown>
                 <NavItem>

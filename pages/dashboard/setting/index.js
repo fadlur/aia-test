@@ -5,6 +5,7 @@ import HeaderDashboard from '@/components/layouts/shared/HeaderDashboard';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
+import EditorDeskripsi from "@/components/blog/EditorDeskripsi";
 
 const Index = ({itemuser}) => {
   // state
@@ -50,6 +51,10 @@ const Index = ({itemuser}) => {
   const onHandleChange = (e) => {
     const {name, value} = e.target;
     setValues({...values,[name]: value});
+  }
+
+  const handleEditorChange = (data) => {
+    setValues({...values,['tembusan']: data});
   }
 
   const onHandleSubmit = (e) => {
@@ -149,7 +154,8 @@ const Index = ({itemuser}) => {
                     <Col>
                       <FormGroup>
                         <Label>Tembusan</Label>
-                        <Input name="tembusan" value={values.tembusan} type="textarea" rows="5" onChange={onHandleChange} />
+                        {/* <Input name="tembusan" value={values.tembusan} type="textarea" rows="5" onChange={onHandleChange} /> */}
+                        <EditorDeskripsi getEditorData={handleEditorChange} initialValues={values.tembusan} />
                       </FormGroup>
                       <FormGroup>
                         { itemtandatangan != null

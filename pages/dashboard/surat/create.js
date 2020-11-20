@@ -24,12 +24,13 @@ const Index = ({itemuser}) => {
     // end data perusahaan
     // isi surat
     no_surat: '',
+    perihal: '',
     pekerja_pria: '',
     pekerja_wanita: '',
     upah_minimum: '',
     upah_maksimum: '',
     jangka_waktu_pkwt: '',
-    alasan_pkwt: 'Sekali selesai, Sementara/maksimal penyelesaian 3 tahun',
+    alasan_pkwt: 'Pekerjaan yang sekali selesai atau yang sementara sifatnya',
     keterangan: '',
     // end isi surat
   });
@@ -111,6 +112,10 @@ const Index = ({itemuser}) => {
                             <Label>No Surat</Label>
                             <Input type="text" name="no_surat" value={values.no_surat} onChange={onHandleChange} />
                           </FormGroup>
+                          <FormGroup>
+                            <Label>Perihal</Label>
+                            <Input type="text" name="perihal" value={values.perihal} onChange={onHandleChange} />
+                          </FormGroup>
                           <Row>
                             <Col>
                               <FormGroup>
@@ -147,26 +152,32 @@ const Index = ({itemuser}) => {
                             <Label>Alasan</Label>
                             <FormGroup check>
                               <Label check>
-                                <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Sekali selesai, Sementara/maksimal penyelesaian 3 tahun" defaultChecked />{' '}
-                                Sekali selesai, Sementara/maksimal penyelesaian 3 tahun
+                                <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Pekerjaan yang sekali selesai atau yang sementara sifatnya" defaultChecked />{' '}
+                                Pekerjaan yang sekali selesai atau yang sementara sifatnya
                               </Label>
                             </FormGroup>
                             <FormGroup check>
                               <Label check>
-                                <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Musiman" />{' '}
-                                Musiman
+                                <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Pekerjaan yang diperkirakan penyelesaiannya dalam waktu yang tidak terlalu lama" />{' '}
+                                Pekerjaan yang diperkirakan penyelesaiannya dalam waktu yang tidak terlalu lama
                               </Label>
                             </FormGroup>
                             <FormGroup check>
                               <Label check>
-                                <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Produk baru/kegiatan baru/produk tambahan" />{' '}
-                                Produk baru/kegiatan baru/produk tambahan
+                                <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Pekerjaan yang bersifat musiman" />{' '}
+                                Pekerjaan yang bersifat musiman
                               </Label>
                             </FormGroup>
                             <FormGroup check>
                               <Label check>
-                                <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Perjanjian Kerja Harian Lepas (bekerja kurang dari 21 hari dalam 1 bulan, paling lama 3 bulan)" />{' '}
-                                Perjanjian Kerja Harian Lepas (bekerja kurang dari 21 hari dalam 1 bulan, paling lama 3 bulan)
+                                <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Pekerjaan yang berhubungan dengan produk baru, kegiatan baru, atau produk tambahan yang masih dalam percobaan atau penjajakan" />{' '}
+                                Pekerjaan yang berhubungan dengan produk baru, kegiatan baru, atau produk tambahan yang masih dalam percobaan atau penjajakan
+                              </Label>
+                            </FormGroup>
+                            <FormGroup check>
+                              <Label check>
+                                <Input type="radio" name="alasan_pkwt" onClick={onHandleChange} value="Pekerjaan yang jenis dan sifat atau kegiatannya bersifat tidak tetap" />{' '}
+                                Pekerjaan yang jenis dan sifat atau kegiatannya bersifat tidak tetap
                               </Label>
                             </FormGroup>
                           </FormGroup>
@@ -192,4 +203,4 @@ const Index = ({itemuser}) => {
   )
 }
 
-export default withAuth(Index)(['admin', 'kepala', 'member']);
+export default withAuth(Index)(['member']);

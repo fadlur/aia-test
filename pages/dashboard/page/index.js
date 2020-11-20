@@ -9,7 +9,7 @@ import Axios from 'axios';
 const Index = ({itemuser}) => {
   // state
   const [ loadingproses, setLoadingProses ] = useState(false);
-  const [ listslideshow, setListSlideshow ] = useState([]);
+  const [ listpage, setListPage ] = useState([]);
   const [ msg, setMsg ] = useState('');
   const [ status, setStatus ] = useState('');
   const [ values, setValues ] = useState({
@@ -21,16 +21,16 @@ const Index = ({itemuser}) => {
   // end state
   // useEffect
   useEffect(() => {
-    const loadslideshow = async () => {
-      const urlslideshow = '/api/v1/slideshow';
-      const [ dataslideshow ] = await Promise.allSettled([
-        Axios.get(urlslideshow),
+    const loadpage = async () => {
+      const urlpage = '/api/v1/blog';
+      const [ datapage ] = await Promise.allSettled([
+        Axios.get(urlpage),
       ]);
-      if (dataslideshow.status == 'fulfilled') {
-        setListSlideshow(dataslideshow.value.data.content);
+      if (datapage.status == 'fulfilled') {
+        setListPage(datapage.value.data.content.data);
       }
     }
-    loadslideshow();
+    loadpage();
   },[]);
   // end useEffect
   // function
@@ -55,12 +55,12 @@ const Index = ({itemuser}) => {
       'content-type': 'multipart/form-data',
     };
     // console.log(formData);
-    Axios.post('/api/v1/slideshow/simpan', formData, header)
+    Axios.post('/api/v1/blog/simpan', formData, header)
       .then(response => {
         setLoadingProses(false);
         // console.log(response.data.content);
         if (response.data.status == 'success') {
-          listslideshow.push(response.data.content);
+          listpage.push(response.data.content);
           setStatus(response.data.status);
           setMsg(response.data.msg);
           setTimeout(() => {
@@ -96,11 +96,11 @@ const Index = ({itemuser}) => {
 
   const onHandleDelete = (id, index) => {
     setLoadingProses(true);
-    Axios.delete(`/api/v1/slideshow/${id}/delete`)
+    Axios.delete(`/api/v1/blog/${id}/delete`)
       .then(response => {
         setLoadingProses(false);
         if (response.data.status == 'success') {
-          listslideshow.splice(index, 1);
+          listpage.splice(index, 1);
         }
         setStatus(response.data.status);
         setMsg(response.data.msg);
@@ -120,13 +120,18 @@ const Index = ({itemuser}) => {
   return (
     <DashLayout 
       user={itemuser}
-      title="Dashboard Slideshow" 
+      title="Dashboard Page" 
       metaDescription="Dashboard">
       <Container className="py-5 main-wrap">
-        <HeaderDashboard title="Slideshow" />
+        <HeaderDashboard title="Page" />
         <Row className="mb-2">
           <Col>
             <Card>
+              <CardHeader>
+                <Link href={`/dashboard/page/create`}>
+                  <a className="btn btn-primary btn-sm float-right">Baru</a>
+                </Link>
+              </CardHeader>
               <CardBody>
                 { status == 'error' &&
                 <Alert color="warning">{msg}</Alert>
@@ -140,26 +145,37 @@ const Index = ({itemuser}) => {
                     <thead>
                       <tr>
                         <th>No</th>
-                        <th>Slide</th>
-                        <th>Caption</th>
+                        {/* <th>Image</th> */}
+                        <th>Title</th>
+                        <th>Content</th>
+                        <th>Status</th>
                         <th></th>
                       </tr>
                     </thead>
                     <tbody>
-                      {listslideshow.map((image, index) => {
+                      {listpage.map((page, index) => {
                         return (
-                          <tr key={image.id}>
+                          <tr key={page.id}>
                             <td>
                               {no++}
                             </td>
-                            <td width="150px">
-                              <img src={image.url} alt="slide" width="100%" />
+                            {/* <td width="150px">
+                              <img src={page.image} alt="slide" width="100%" />
+                            </td> */}
+                            <td>
+                              {page.title}
                             </td>
                             <td>
-                              {image.caption}
+                              {page.content_summary}
                             </td>
                             <td>
-                              <Button color="danger" size="sm" onClick={() => onHandleDelete(image.id, index)} disabled={loadingproses}>Delete</Button>
+                              {page.status}
+                            </td>
+                            <td>
+                              <Link href={`/dashboard/page/${page.id}/edit`}>
+                                <a className="btn btn-primary btn-sm mb-2 mr-2">Edit</a>
+                              </Link>
+                              <Button color="danger" size="sm" className="mb-2" onClick={() => onHandleDelete(page.id, index)} disabled={loadingproses}>Delete</Button>
                             </td>
                           </tr>
                         )
@@ -167,27 +183,6 @@ const Index = ({itemuser}) => {
                     </tbody>
                   </Table>
                 </div>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Card>
-              <CardBody>
-                <Form id="formslide" onSubmit={onHandleSubmit}>
-                  <FormGroup>
-                    <Label>Slide</Label>
-                    <Input type="file" name="image" onChange={onHandleChange} />
-                  </FormGroup>
-                  <FormGroup>
-                    <Label>Caption</Label>
-                    <Input type="textarea" name="caption" onChange={onHandleChange} rows="5" />
-                  </FormGroup>
-                  <FormGroup>
-                    <Button color="primary" disabled={loadingproses}>Simpan</Button>
-                  </FormGroup>
-                </Form>
               </CardBody>
             </Card>
           </Col>
