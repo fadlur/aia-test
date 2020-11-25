@@ -114,10 +114,10 @@ const Index = ({itemuser}) => {
   return (
     <DashLayout 
       user={itemuser}
-      title="Dashboard Slideshow" 
+      title="Dashboard Page" 
       metaDescription="Dashboard">
       <Container className="py-5 main-wrap">
-        <HeaderDashboard title="Slideshow" />
+        <HeaderDashboard title="Page" />
         <Row>
           <Col>
             <Card>

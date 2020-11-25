@@ -1,8 +1,10 @@
-import { Container, Row, Col, Breadcrumb, BreadcrumbItem, Table } from "reactstrap";
+import { Container, Row, Col, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import BaseLayout from "@/components/layouts/BaseLayout";
 import Link from "next/link";
+import axiosInstance from "@/components/lib/client";
 
 const Faq = (props) => {
+  const { itemblog } = props
   return (
     <BaseLayout
       title="FAQ"
@@ -23,71 +25,34 @@ const Faq = (props) => {
           </Col>
         </Row>
         <Row>
-          <Col className="mb-2">
-            <h4>FAQ</h4>
-            <Table>
-              <tr>
-                <td>
-                  <b>Apa itu PKWT ?</b>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Perjanjian Kerja Waktu Tertentu (PKWT) atau disebut juga Perjanjian Kontrak adalah Perjanjian kerja antara pekerja/buruh dengan pengusaha untuk mengadakan hubungan kerja dalam waktu tertentu atau pekerjaan tertentu.
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <b>Jenis pekerjaan apa saja yang diperbolehkan di PKWT?</b>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Tidak semua jenis pekerjaan/kegiatan dapat di PKWT, jenis kegiatan pekerjaan yang diperbolehkan melalui  PKWT adalah :
-                  <ol>
-                    <li>Pekerjaan yang sekali selesai atau sementara sifatnya.</li>
-                    <li>Pekerjaan yang bersifat musiman.</li>
-                    <li>Pekerjaan yang berhubungan dengan produk baru.</li>
-                    <li>Pekerjaan harian lepas.</li>
-                  </ol>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <b>Bagaimana setelah PKWT ditandatangani pekerja dan pengusaha ?</b>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  PKWT wajib dicatatkan oleh pengusaha kepada Instansi yang bertanggung jawab dibidang ketenagakerjaan Kabupaten/Kota kalau di Kabupaten Kudus oleh Dinas Nakerperinkop dan UKM, selambat-lambatnya 7 (tujuh) hari kerja sejak PKWT ditandatangani oleh pekerja dan pengusaha.
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <b>Bagaimana cara pengusaha mencatatkan PKWT ?</b>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Untuk mencatatkan PKWT dapat lewat link Dinas Nakerperinkop dan UKM Kabupaten Kudus melalui e-pkwt.kuduskab.go.id
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <b>Mengapa PKWT harus dicatatkan kepada Dinas?</b>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Karena sesuai ketentuan perundangan PKWT wajib dicatatkan untuk memperoleh Bukti Pencatatan PKWT.
-                </td>
-              </tr>
-            </Table>
-          </Col>
+          {itemblog != null
+          ? <Col className="mb-2" dangerouslySetInnerHTML={{__html: itemblog.content}}></Col>
+          : null
+          }
         </Row>
       </Container>
     </BaseLayout>
   )
+}
+
+export async function getStaticProps(context) {
+  const key = process.env.API_KEY;
+  const urlblog = `/blogbyslug/faq?key=${key}`;
+  let itemblog = null;
+  const [ datalistslideshow ] = await Promise.allSettled([
+    axiosInstance.get(urlblog).then(r => r.data)
+  ]);
+  console.log(datalistslideshow)
+  if (datalistslideshow.status == 'fulfilled') {
+    itemblog = datalistslideshow.value.content;
+  }
+
+  return {
+    props: {
+      itemblog
+    },
+    revalidate: 60,
+  }
 }
 
 export default Faq;

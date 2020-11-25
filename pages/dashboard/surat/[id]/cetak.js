@@ -7,6 +7,7 @@ import { Col, Container, Row, Table } from 'reactstrap';
 const Cetak = ({itemuser}) => {
   const router = useRouter();
   const [ itemsurat, setItemSurat ] = useState(null);
+  const [ itemtandatangan, setItemTandatangan ] = useState(null);
   const [ status, setStatus ] = useState('');
   const [ msg, setMsg ] = useState('');
   const [ listpekerja, setListPekerja ] = useState([]);
@@ -20,6 +21,7 @@ const Cetak = ({itemuser}) => {
       if (dataSurat.status == 'fulfilled') {
         setItemSurat(dataSurat.value.content.itemsurat);
         setListPekerja(dataSurat.value.content.itempekerja);
+        setItemTandatangan(dataSurat.value.content.itemtandatangan);
       }
 
       // if (dataLampiran.status == 'fulfilled') {
@@ -272,18 +274,20 @@ const Cetak = ({itemuser}) => {
         </Row>
         <Row className="mb-2">
           <Col md="6" sm="6"></Col>
-          <Col md="6" sm="6" className="text-center">
-            Plt KEPALA DINAS<br />
-            TENAGA KERJA PERINDUSTRIAN KOPERASI<br />
-            USAHA KECIL DAN MENENGAH<br />
-            Sekretaris<br /><br /><br /><br /><br />
+          { itemtandatangan != null &&
+            <Col md="6" sm="6" className="text-center">
+              {itemtandatangan.jabatan}<br />
+              TENAGA KERJA PERINDUSTRIAN KOPERASI<br />
+              USAHA KECIL DAN MENENGAH<br />
+              Sekretaris<br /><br /><br /><br /><br />
 
 
 
-            MARTI, SE, MM<br />
-            Pembina Tk.1<br />
-            NIP.196.305111986082001
-          </Col>
+              {itemtandatangan.nama}<br />
+              {itemtandatangan.sub_jabatan}<br />
+              {itemtandatangan.nip}
+            </Col>          
+          }
         </Row>
         {/* <Row>
           <Col>

@@ -209,6 +209,12 @@ const Index = ({itemuser}) => {
                         </td>
                       </tr>
                       <tr>
+                        <td>Perihal</td>
+                        <td>
+                          { itemsurat.perihal }
+                        </td>
+                      </tr>
+                      <tr>
                         <td>Nama Perusahaan</td>
                         <td>
                           { itemsurat.nama_perusahaan }
@@ -394,7 +400,7 @@ const Index = ({itemuser}) => {
             }
           </Col>
         </Row>
-        { itemuser.role == 'kepala' || itemuser.role == 'admin'
+        { (itemuser.role == 'kepala' || itemuser.role == 'admin') && itemsurat != null && itemsurat.status == 'confirm'
           ? <Row>
               <Col md="6" sm="6">
                 <Card>

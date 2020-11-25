@@ -37,7 +37,9 @@ const Index = ({itemuser}) => {
         setMsg(response.data.msg);
         setStatus(response.data.status);
         if (response.data.status == 'success') {
-          
+          setTimeout(() => {
+            router.push('/dashboard');
+          }, 1500);
         }
       })
       .catch(err => {

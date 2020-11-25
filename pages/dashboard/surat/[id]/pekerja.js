@@ -7,6 +7,7 @@ import { Col, Container, Row, Table } from 'reactstrap';
 const Pekerja = ({itemuser}) => {
   const router = useRouter();
   const [ itemsurat, setItemSurat ] = useState(null);
+  const [ itemtandatangan , setItemTandatangan ] = useState(null);
   const [ status, setStatus ] = useState('');
   const [ msg, setMsg ] = useState('');
   const [ listpekerja, setListPekerja ] = useState([]);
@@ -21,6 +22,7 @@ const Pekerja = ({itemuser}) => {
       if (dataSurat.status == 'fulfilled') {
         setItemSurat(dataSurat.value.content.itemsurat);
         setListPekerja(dataSurat.value.content.itempekerja);
+        setItemTandatangan(dataSurat.value.content.itemtandatangan);
       }
 
       // if (dataLampiran.status == 'fulfilled') {
@@ -120,26 +122,33 @@ const Pekerja = ({itemuser}) => {
         <Row className="mb-2">
           <Col md="6" sm="6"></Col>
           <Col md="6" sm="6" className="text-center">
-            Kudus,   November 2020<br />
+            Kudus,  {itemsurat != null && itemsurat.pencatatan != null
+                    ? itemsurat.pencatatan.tanggal_pencatatan
+                    : null
+                    }<br />
             <br />
-            Plt KEPALA DINAS<br />
-            TENAGA KERJA PERINDUSTRIAN KOPERASI<br />
-            USAHA KECIL DAN MENENGAH<br />
-            Sekretaris<br /><br /><br /><br /><br />
+            { itemtandatangan != null &&
+              <>
+                {itemtandatangan.jabatan}<br />
+                TENAGA KERJA PERINDUSTRIAN KOPERASI<br />
+                USAHA KECIL DAN MENENGAH<br />
+                Sekretaris<br /><br /><br /><br /><br />
 
 
 
-            MARTI, SE, MM<br />
-            Pembina Tk.1<br />
-            NIP.196.305111986082001
+                {itemtandatangan.nama}<br />
+                {itemtandatangan.sub_jabatan}<br />
+                {itemtandatangan.nip}
+              </>          
+            }
           </Col>
         </Row>
         <Row>
-          <Col>
-            Tembusan Kepada Yth<br />
-            1. Plt Bupati Kudus<br />
-            2. Arsip
-          </Col>
+          { itemtandatangan != null &&
+            <Col dangerouslySetInnerHTML={{__html:itemtandatangan.tembusan}}>
+              
+            </Col>          
+          }
         </Row>
       </Container>
     </PrintLayout>
