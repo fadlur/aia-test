@@ -5,10 +5,10 @@ import Meta from './shared/Meta';
 
 const BaseLayout = (props) => {
   const router = useRouter();
-  const { children, title='E-PKWT', metaDescription='', metaImage } = props;
+  const { children, title='AIA TEST', metaDescription='', metaImage } = props;
   return (
     <>
-      <Meta title={`${title} | E-PKWT`} metaDescription={metaDescription} metaImage={metaImage} />
+      <Meta title={`${title} | AIA TEST`} metaDescription={metaDescription} metaImage={metaImage} />
       <Header />
       {children}
       <Footer />

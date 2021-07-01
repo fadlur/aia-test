@@ -7,8 +7,8 @@ const Kontak = (props) => {
   const { itemblog } = props
   return (
     <BaseLayout
-      title="Kontak"
-      metaDescription="Kontak E-PKWT">
+      title="Contact US"
+      metaDescription="AIA DEMO - FADLUR ROHMAN">
       <Container className="py-4">
         <Row>
           <Col className="py-4">

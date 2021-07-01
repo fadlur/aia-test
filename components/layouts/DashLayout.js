@@ -5,7 +5,7 @@ import Meta from './shared/Meta';
 
 const PrintLayout = (props) => {
   const router = useRouter();
-  const { children, title='Kelas Fadlur', metaDescription='', metaImage, user, loading } = props;
+  const { children, title='AIA TEST', metaDescription='', metaImage, user, loading } = props;
   return (
     <>
       <Meta title={title} metaDescription={metaDescription} metaImage={metaImage} />

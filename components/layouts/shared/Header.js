@@ -44,12 +44,6 @@ const Header = (props) => {
                 <BsNavLink title='Home' href='/' />
               </NavItem>
               <NavItem>
-                <BsNavLink title='Alur' href='/alur' />
-              </NavItem>
-              <NavItem>
-                <BsNavLink title='FAQ' href='/faq' />
-              </NavItem>
-              <NavItem>
                 <BsNavLink title='Kontak' href='/kontak' />
               </NavItem>
               <NavItem>

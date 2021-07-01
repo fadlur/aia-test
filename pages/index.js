@@ -6,21 +6,10 @@ import { useState } from "react";
 
 const Index = (props) => {
   const {listslide} = props;
-  // const [ itemimage, setItemImage ] = useState([]);
-  // setItemImage(listslide);
-  // console.log(listslide);
-  // const itemimage = [
-  //   {
-  //     url: '/images/slide1.jpg',
-  //   },
-  //   {
-  //     url: '/images/slide2.jpeg',
-  //   }
-  // ]
   return (
     <BaseLayout
-      title="Beranda"
-      metaDescription="E-PKWT layanan pendataan pekerja">
+      title="HOME TEST AIA - FADLUR ROHMAN"
+      metaDescription="AIA DEMO - FADLUR ROHMAN">
       <Container className="py-4 text-center">
         <SlideCarousel itemimage={listslide} />
       </Container>
