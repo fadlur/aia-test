@@ -6,7 +6,7 @@ const Footer = () => {
       <hr />
       <Row>
         <Col>
-        <p>&copy; 2020 E-PKWT DISNAKERPERINKOPUKM KAB KUDUS</p>
+        <p>&copy; 2021 - AIA TEST</p>
         </Col>
       </Row>
     </Container>
